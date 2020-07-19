@@ -1,3 +1,15 @@
+"""
+Name: aws_iam_resources.py
+Created by: Masato Shima
+Created on: 2020/07/18
+Description:
+	以下の IAM 関連のリソースを作成する
+		- IAM Group, User, Role, Policy
+	作成される IAM User には以下のような制限を設ける
+		- マネジメントコンソールへのログインは MFA 認証必須
+		- マネジメントコンソールへログイン後, 必要な操作は全て, switch role を行った後に行う
+"""
+
 import json
 from typing import *
 
@@ -12,7 +24,7 @@ class AwsIamResources(core.Construct):
 		super().__init__(scope, id)
 
 		# IAM Group
-		handson_cdk_developers = iam.Group(
+		hands_on_cdk_developers = iam.Group(
 			self,
 			"HandsOnCdkDevelopers",
 			group_name="HandsOnCdkDevelopers"
@@ -24,7 +36,7 @@ class AwsIamResources(core.Construct):
 			"HandsOnCdkDeveloper-Guest",
 			user_name="HandsOnCdkDeveloper-Guest",
 			password=core.SecretValue.plain_text("password"),
-			groups=[handson_cdk_developers]
+			groups=[hands_on_cdk_developers]
 		)
 
 		# IAM Role
@@ -45,7 +57,7 @@ class AwsIamResources(core.Construct):
 			policy_name="HandsOnCdkDevelopers-Policy-SourceMfaRestriction",
 			force=True,
 			groups=[
-				handson_cdk_developers
+				hands_on_cdk_developers
 			],
 			statements=[
 				statement for statement in read_config_source_mfa_restriction()
@@ -58,7 +70,7 @@ class AwsIamResources(core.Construct):
 			policy_name="HandsOnCdkDevelopers-Policy-OnlySwitchRole",
 			force=True,
 			groups=[
-				handson_cdk_developers
+				hands_on_cdk_developers
 			],
 			statements=[
 				statement for statement in read_config_only_switch_role()

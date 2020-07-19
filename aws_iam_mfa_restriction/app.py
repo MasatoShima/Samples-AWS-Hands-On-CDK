@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+Name: app.py
+Created by: Masato Shima
+Created on: 2020/07/18
+Description:
+	app.py
+"""
 
 from aws_cdk import core
 
@@ -16,3 +23,5 @@ AwsIamMfaRestrictionStack(
 )
 
 app.synth()
+
+# End
