@@ -19,20 +19,11 @@ class AwsIamResources(core.Construct):
 		)
 
 		# IAM User
-		hands_on_cdk_developer_guest = iam.User(
+		iam.User(
 			self,
 			"HandsOnCdkDeveloper-Guest",
 			user_name="HandsOnCdkDeveloper-Guest",
 			password=core.SecretValue.plain_text("password"),
-			groups=[handson_cdk_developers]
-		)
-
-		hands_on_cdk_developer_guest_password_reset_required = iam.User(
-			self,
-			"HandsOnCdkDeveloper-Guest-PasswordResetRequired",
-			user_name="HandsOnCdkDeveloper-Guest-PasswordResetRequired",
-			password=core.SecretValue.plain_text("password"),
-			password_reset_required=True,
 			groups=[handson_cdk_developers]
 		)
 
