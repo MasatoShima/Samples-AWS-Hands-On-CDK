@@ -13,7 +13,7 @@ from aws_cdk import (
 
 from aws_cdk.pipelines import *
 
-git_token = "971e4b447035172093cfceb4132b671e134e9fea"
+git_token = "dab41aa4d54ce529e8fe051c9de2387a60bf36d6"
 
 
 class CdkpipelinesDemoPipelineStack(core.Stack):
