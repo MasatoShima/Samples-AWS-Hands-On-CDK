@@ -11,9 +11,10 @@ from aws_cdk import (
 	core
 )
 
-from aws_cdk.pipelines import *
-
-git_token = "0a14488dc49f3eb6618f78f11d436d0dbe534840"
+from aws_cdk.pipelines import (
+	CdkPipeline,
+	SimpleSynthAction
+)
 
 
 class CdkpipelinesDemoPipelineStack(core.Stack):
@@ -32,14 +33,19 @@ class CdkpipelinesDemoPipelineStack(core.Stack):
 			source_action=aws_codepipeline_actions.GitHubSourceAction(
 				action_name="GitHub",
 				output=source_artifact,
-				oauth_token=SecretValue.plain_text(git_token),
+				oauth_token=SecretValue.secrets_manager(
+					secret_id="github-token",
+					json_field="github-token"
+				),
 				owner="MasatoShima",
 				repo="Samples-AWS-Hands-On-CDK-IntroCdkpipelines",
 				trigger=aws_codepipeline_actions.GitHubTrigger.POLL
 			),
-			synth_action=ShellScriptActionProps(
-				action_name="TEST",
-				commands=["echo 'Hello !!'"]
+			synth_action=SimpleSynthAction.standard_yarn_synth(
+				source_artifact=source_artifact,
+				cloud_assembly_artifact=cloud_assembly_artifact,
+				install_command="pip install -r requirements.txt",
+				subdirectory="./intro_cdkpipelines/"
 			)
 		)
 
