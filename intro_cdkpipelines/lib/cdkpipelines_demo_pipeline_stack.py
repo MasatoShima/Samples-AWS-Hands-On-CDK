@@ -16,6 +16,8 @@ from aws_cdk.pipelines import (
 	SimpleSynthAction
 )
 
+from lib.cdkpipelines_demo_stage import CdkpipelinesDemoStage
+
 
 class CdkpipelinesDemoPipelineStack(core.Stack):
 
@@ -25,7 +27,7 @@ class CdkpipelinesDemoPipelineStack(core.Stack):
 		source_artifact = aws_codepipeline.Artifact()
 		cloud_assembly_artifact = aws_codepipeline.Artifact()
 
-		CdkPipeline(
+		pipeline = CdkPipeline(
 			self,
 			"cdk_pipeline",
 			pipeline_name="IntroCdkpipelinesStack_Pipeline",
@@ -38,7 +40,7 @@ class CdkpipelinesDemoPipelineStack(core.Stack):
 					json_field="github-token"
 				),
 				owner="MasatoShima",
-				repo="Samples-AWS-Hands-On-CDK-IntroCdkpipelines",
+				repo="Samples-AWS-Hands-On-CDK",
 				trigger=aws_codepipeline_actions.GitHubTrigger.POLL
 			),
 			synth_action=SimpleSynthAction.standard_yarn_synth(
@@ -46,6 +48,17 @@ class CdkpipelinesDemoPipelineStack(core.Stack):
 				cloud_assembly_artifact=cloud_assembly_artifact,
 				install_command="pip install -r requirements.txt",
 				subdirectory="./intro_cdkpipelines/"
+			)
+		)
+
+		pipeline.add_application_stage(
+			CdkpipelinesDemoStage(
+				self,
+				"PreProd",
+				env={
+					"account": core.ScopedAws(scope).account_id,
+					"region": core.ScopedAws(scope).region
+				}
 			)
 		)
 
