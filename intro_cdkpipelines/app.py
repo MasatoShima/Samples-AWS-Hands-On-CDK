@@ -6,6 +6,7 @@ from lib.cdkpipelines_demo_pipeline_stack import CdkpipelinesDemoPipelineStack
 
 
 app = core.App()
-CdkpipelinesDemoPipelineStack(app, "intro-cdkpipelines")
+
+CdkpipelinesDemoPipelineStack(app, "Samples-AWS-Hands-On-CDK-intro-cdkpipelines")
 
 app.synth()
