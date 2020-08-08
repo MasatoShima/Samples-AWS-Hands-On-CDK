@@ -49,7 +49,7 @@ class CdkpipelinesDemoPipelineStack(core.Stack):
 		)
 
 		pipeline.add_application_stage(
-			CdkpipelinesDemoStage(self, "")
+			CdkpipelinesDemoStage(self, "PreProd")
 		)
 
 # End
