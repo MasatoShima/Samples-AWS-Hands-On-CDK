@@ -1,8 +1,5 @@
 from aws_cdk.core import (
-	Construct,
 	SecretValue,
-	Stack,
-	StackProps
 )
 
 from aws_cdk import (
@@ -52,14 +49,7 @@ class CdkpipelinesDemoPipelineStack(core.Stack):
 		)
 
 		pipeline.add_application_stage(
-			CdkpipelinesDemoStage(
-				self,
-				"PreProd",
-				env={
-					"account": core.ScopedAws(scope).account_id,
-					"region": core.ScopedAws(scope).region
-				}
-			)
+			CdkpipelinesDemoStage(self, "PreProd")
 		)
 
 # End

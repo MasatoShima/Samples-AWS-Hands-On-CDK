@@ -1,10 +1,3 @@
-from aws_cdk.core import (
-	CfnOutput,
-	Construct,
-	Stack,
-	StackProps
-)
-
 from aws_cdk import (
 	core
 )
@@ -12,7 +5,7 @@ from aws_cdk import (
 from intro_cdkpipelines.intro_cdkpipelines_stack import IntroCdkpipelinesStack
 
 
-class CdkpipelinesDemoStage(core.Stack):
+class CdkpipelinesDemoStage(core.Stage):
 
 	def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
 		super().__init__(scope, id, **kwargs)

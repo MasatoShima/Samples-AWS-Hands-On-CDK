@@ -1,8 +1,5 @@
 from aws_cdk.core import (
-    CfnOutput,
-    Construct,
-    Stack,
-    StackProps
+    CfnOutput
 )
 
 from aws_cdk import (
