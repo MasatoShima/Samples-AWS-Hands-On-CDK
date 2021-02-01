@@ -43,8 +43,8 @@ def create_user():
 @app.route("/users/{username}", methods=["GET"])
 def get_user(username):
     key = {
-        "PK": "User#%s" % username,
-        "SK": "Profile#%s" % username,
+        "PK": f"User#{username}",
+        "SK": f"Profile#{username}",
     }
 
     item = dynamodb_table.get_item(Key=key)["Item"]
